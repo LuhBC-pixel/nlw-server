@@ -22,9 +22,8 @@ model Ad {
   discord         String
   weekDays        String
   hourStart       Int
-  hoursEnd        Int
+  hourEnd         Int
   useVoiceChannel Boolean
   createdAt       DateTime @default(now())
-
-  game Game @relation(fields: [gameId], references: [id])
+  game            Game     @relation(fields: [gameId], references: [id])
 }

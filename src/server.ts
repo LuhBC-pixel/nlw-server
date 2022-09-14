@@ -3,7 +3,7 @@ import cors from 'cors';
 
 import { PrismaClient } from '@prisma/client';
 import { convertHourStringToMinutes } from './utils/convert-hour-string-to-minutes';
-import { convertMinuteToHout } from './utils/convert-minuto-to-hour';
+import { convertMinutesToHourString } from './utils/convert-minutes-to-hour-string';
 
 const app = express();
 
@@ -40,7 +40,7 @@ app.post('/games/:id/ads', async (request, response) => {
       discord: body.discord,
       weekDays: body.weekDays.join(','),
       hourStart: convertHourStringToMinutes(body.hourStart),
-      hoursEnd: convertHourStringToMinutes(body.hoursEnd),
+      hourEnd: convertHourStringToMinutes(body.hourEnd),
       useVoiceChannel: body.useVoiceChannel,
     },
   });
@@ -59,7 +59,7 @@ app.get('/games/:id/ads', async (request, response) => {
       useVoiceChannel: true,
       yearsPlaying: true,
       hourStart: true,
-      hoursEnd: true,
+      hourEnd: true,
     },
     where: {
       gameId,
@@ -74,8 +74,8 @@ app.get('/games/:id/ads', async (request, response) => {
       return {
         ...ad,
         weekDays: ad.weekDays.split(','),
-        hourStart: convertMinuteToHout(ad.hourStart),
-        hoursEnd: convertMinuteToHout(ad.hoursEnd),
+        hourStart: convertMinutesToHourString(ad.hourStart),
+        hourEnd: convertMinutesToHourString(ad.hourEnd),
       };
     })
   );
